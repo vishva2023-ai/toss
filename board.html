@@ -16,7 +16,7 @@
 
         :root {
             --primary-green: #10b981;
-            --primary-green-dark: #059669;
+            --primary-green-dark: #75e5c2;
             --secondary-gray: #6b7280;
             --secondary-gray-dark: #4b5563;
             --bg-cream: #f5f0e8;
@@ -51,6 +51,107 @@
             line-height: 1.6;
         }
 
+        /* ===== LOADING SCREEN STYLES ===== */ 
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f0fdf4  10%, #90c3a2  10%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .loading-screen.fade-out {
+            animation: fadeOut 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .loading-content {
+            text-align: center;
+            color: white;
+        }
+
+        .loading-logo {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .loading-message {
+            font-size: 22px;
+            margin-bottom: 40px;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid rgba(31, 26, 26, 0.3);
+            border-top: 6px solid rgb(26, 24, 24);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 30px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-dots {
+            font-size: 18px;
+            font-weight: 600;
+            color: rgb(9, 9, 9);
+        }
+
+        .loading-dots span {
+            animation: dots 1.5s infinite;
+            opacity: 0;
+        }
+
+        .loading-dots span:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .loading-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes dots {
+            0%, 20% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .player-connection-info {
+            margin-top: 25px;
+            font-size: 15px;
+            color: rgba(255,255,255,0.8);
+            font-weight: 500;
+        }
+
         /* ===== MAIN CONTAINER ===== */
         .game-container {
             display: flex;
@@ -58,12 +159,6 @@
             max-width: 1500px;
             width: 100%;
             flex-wrap: wrap;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ===== SIDEBAR SECTION ===== */
@@ -701,6 +796,14 @@
             .modal-title {
                 font-size: 28px;
             }
+
+            .loading-logo {
+                font-size: 36px;
+            }
+
+            .loading-message {
+                font-size: 18px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -733,10 +836,31 @@
             .title {
                 font-size: 24px;
             }
+
+            .loading-logo {
+                font-size: 28px;
+            }
+
+            .loading-message {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">Physical To Online</div>
+            <div class="loading-message">Connecting to game room...</div>
+            <div class="loading-spinner"></div>
+            <div class="loading-dots">
+                <span>.</span><span>.</span><span>.</span>
+            </div>
+            <div class="player-connection-info">Waiting for Vishva_1409</div>
+        </div>
+    </div>
+
     <!-- Main Game Container -->
     <div class="game-container">
         <!-- Left Sidebar Panel -->
@@ -765,11 +889,11 @@
                 <h2 class="section-title">Active Players</h2>
                 <div class="player-indicator" id="player1Indicator">
                     <div class="player-dot brown" aria-hidden="true"></div>
-                    <div class="player-name">Vishva_1409 </div>
+                    <div class="player-name">Vishva_1409</div>
                 </div>
                 <div class="player-indicator" id="player2Indicator">
                     <div class="player-dot orange" aria-hidden="true"></div>
-                    <div class="player-name">Dhanuh_2706 </div>
+                    <div class="player-name">Dhanush_2706</div>
                 </div>
             </section>
 
@@ -811,7 +935,7 @@
         <main class="board-section" role="main">
             <!-- Turn Indicator -->
             <div class="turn-indicator" id="turnIndicator" aria-live="assertive" aria-atomic="true">
-                Vishva1409's Turn 
+                Vishva_1409's Turn
             </div>
 
             <!-- Game Board -->
@@ -856,8 +980,8 @@
             BOARD_SIZE: 6,
             PLAYER_BROWN: 'brown',
             PLAYER_ORANGE: 'orange',
-            PLAYER_BROWN_NAME: 'Vishva1409',
-            PLAYER_ORANGE_NAME: 'Dhanuh2706',
+            PLAYER_BROWN_NAME: 'Vishva_1409',
+            PLAYER_ORANGE_NAME: 'Dhanush_2706',
             MAX_HISTORY: 100,
             ANIMATION_DURATION: 300
         };
@@ -901,7 +1025,7 @@
         }
 
         function setupBoardPieces() {
-            // Place brown pieces (Vishva1409 - top 2 rows)
+            // Place brown pieces (Vishva_1409 - top 2 rows)
             for (let row = 0; row < 2; row++) {
                 for (let col = 0; col < CONFIG.BOARD_SIZE; col++) {
                     if ((row + col) % 2 === 1) {
@@ -913,7 +1037,7 @@
                 }
             }
             
-            // Place orange pieces (Dhanuh2706 - bottom 2 rows)
+            // Place orange pieces (Dhanush_2706 - bottom 2 rows)
             for (let row = CONFIG.BOARD_SIZE - 2; row < CONFIG.BOARD_SIZE; row++) {
                 for (let col = 0; col < CONFIG.BOARD_SIZE; col++) {
                     if ((row + col) % 2 === 1) {
@@ -1298,10 +1422,21 @@
 
         // ===== INITIALIZE ON LOAD =====
         window.addEventListener('DOMContentLoaded', () => {
+            // Show loading screen for 5 seconds
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loadingScreen');
+                loadingScreen.classList.add('fade-out');
+                
+                // Remove loading screen after fade animation
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 5000);
+
             initializeGame();
             console.log('%cPhysical To Online - Checkers Game Platform', 'color: #10b981; font-size: 16px; font-weight: bold;');
             console.log('%cVersion 1.0.0 | Professional Edition', 'color: #6b7280; font-size: 12px;');
-            console.log('%cPlayers: Vishva1409 vs Dhanuh2706', 'color: #6b7280; font-size: 12px;');
+            console.log('%cPlayers: Vishva_1409 vs Dhanush_2706', 'color: #6b7280; font-size: 12px;');
         });
 
         // ===== EXPORT FOR TESTING (Development Only) =====
